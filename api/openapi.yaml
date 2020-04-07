@@ -1,0 +1,137 @@
+openapi: 3.0.1
+info:
+  title: Strava OAuth
+  description: Strava OAuth2 handler for SPA
+  version: 0.0.0
+servers:
+- url: /
+tags:
+- name: token
+  description: Token exchange
+paths:
+  /token:
+    post:
+      tags:
+      - token
+      summary: Get access and refresh tokens
+      operationId: token
+      requestBody:
+        description: Token request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+        required: true
+      responses:
+        "200":
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        "403":
+          description: Forbidden
+          content: {}
+      x-swagger-router-controller: Token
+  /refresh:
+    post:
+      tags:
+      - token
+      summary: Refresh token
+      operationId: refresh
+      requestBody:
+        description: Refresh request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshRequest'
+        required: true
+      responses:
+        "200":
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshResponse'
+        "403":
+          description: Forbidden
+          content: {}
+      x-swagger-router-controller: Token
+components:
+  schemas:
+    TokenRequest:
+      required:
+      - code
+      type: object
+      properties:
+        code:
+          type: string
+          description: Must be included if grant_type=authorization_code
+          example: cfdebf...
+    RefreshRequest:
+      required:
+      - refresh_token
+      type: object
+      properties:
+        refresh_token:
+          type: string
+          description: Must be included if grant_type=refresh_token
+          example: b5c569...
+    TokenResponse:
+      required:
+      - access_token
+      - expires_at
+      - expires_in
+      - refresh_token
+      type: object
+      properties:
+        token_type:
+          type: string
+          example: Bearer
+        access_token:
+          type: string
+          example: a9b723...
+        refresh_token:
+          type: string
+          example: b5c569...
+        expires_at:
+          type: integer
+          example: 1568775134
+        expires_in:
+          type: integer
+          example: 20566
+      example:
+        access_token: a9b723...
+        refresh_token: b5c569...
+        expires_at: 1568775134
+        token_type: Bearer
+        expires_in: 20566
+    RefreshResponse:
+      required:
+      - access_token
+      - expires_at
+      - expires_in
+      - refresh_token
+      type: object
+      properties:
+        token_type:
+          type: string
+          example: Bearer
+        access_token:
+          type: string
+          example: a9b723...
+        refresh_token:
+          type: string
+          example: b5c569...
+        expires_at:
+          type: integer
+          example: 1568775134
+        expires_in:
+          type: integer
+          example: 20566
+      example:
+        access_token: a9b723...
+        refresh_token: b5c569...
+        expires_at: 1568775134
+        token_type: Bearer
+        expires_in: 20566

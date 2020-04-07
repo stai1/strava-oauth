@@ -1,0 +1,1 @@
+exports.STRAVA_ENDPOINT = "https://www.strava.com/oauth/token";
