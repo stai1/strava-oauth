@@ -16,7 +16,7 @@
     "connect": "^3.2.0",
     "dotenv": "^8.2.0",
     "js-yaml": "^3.3.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "oas3-tools": "^2.0.2"
   }
 }
